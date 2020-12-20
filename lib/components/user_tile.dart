@@ -41,9 +41,22 @@ class UserTile extends StatelessWidget {
                   showDialog(context: context,
                   builder: (ctx) => AlertDialog(
                     title: Text('Excluir usuário'),
-                    content: Text('T'),
-                  ));
-                  Provider.of<Users>(context, listen: false).remove(user);
+                    content: Text('Tem certeza?'),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: Text('Não'),
+                        onPressed: () => Navigator.of(context).pop(false),
+                      ),
+                      FlatButton(
+                        child: Text('Sim'),
+                        onPressed: () => Navigator.of(context).pop(true),
+                      ),
+                    ],
+                  )).then((confirmed){
+                    if(confirmed){
+                      Provider.of<Users>(context, listen: false).remove(user);
+                    }
+                  });
                 },
               ),
             ],
